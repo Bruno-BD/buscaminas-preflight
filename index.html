@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'unsafe-inline'; style-src 'unsafe-inline'; connect-src 'none'; form-action 'none'; base-uri 'none'">
+  <title>Prueba de acceso</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; padding: 24px 16px; background: #eef2f6; color: #182638; font: 18px/1.5 system-ui, sans-serif; }
+    main { width: 100%; max-width: 640px; margin: 0 auto; padding: 24px; border: 1px solid #aebdcd; border-radius: 16px; background: #fff; overflow-wrap: anywhere; }
+    h1 { margin: 0 0 8px; font-size: clamp(1.6rem, 6vw, 2.2rem); line-height: 1.2; }
+    .id { margin: 0 0 24px; color: #41556e; font-size: 1rem; }
+    button { display: block; width: 100%; min-height: 64px; padding: 16px; border: 2px solid #12467e; border-radius: 10px; background: #12467e; color: #fff; font: inherit; font-weight: 700; cursor: pointer; touch-action: manipulation; }
+    button:active { background: #08345f; }
+    button:focus-visible { outline: 4px solid #a83b00; outline-offset: 4px; }
+    .counter { margin: 24px 0 8px; font-size: 1.5rem; }
+    .time { margin: 0 0 24px; }
+    li + li { margin-top: 12px; }
+    ol { padding-left: 24px; }
+    .note { font-size: 1rem; color: #41556e; }
+    @media (max-width: 360px) { main { padding: 20px 16px; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Prueba de acceso</h1>
+    <p class="id">ID: <strong>B-PREFLIGHT-01</strong></p>
+    <button id="test-button" type="button">Probar toque / clic</button>
+    <p class="counter" role="status" aria-live="polite" aria-atomic="true">Contador: <strong id="count">0</strong></p>
+    <p class="time">Tiempo transcurrido: <span id="elapsed">0 s</span></p>
+    <ol>
+      <li>Pulsa el botón tres veces. El contador debe mostrar 3.</li>
+      <li>Cambia a otra aplicación durante unos segundos y vuelve a esta pestaña, sin recargarla.</li>
+      <li>Comprueba que el contador sigue en 3 y que el tiempo ha avanzado. Pulsa una vez más: debe mostrar 4.</li>
+    </ol>
+    <p class="note">En escritorio también puedes usar Tab para enfocar el botón y Enter o Espacio para activarlo.</p>
+    <p class="note">El contador vive solo en esta página abierta. Recargarla o que el navegador la descarte reinicia la prueba. Esta página no guarda ni envía el contador.</p>
+    <noscript><p>JavaScript está desactivado: el contador y el tiempo no funcionarán.</p></noscript>
+  </main>
+  <script>
+    'use strict';
+    const button = document.getElementById('test-button');
+    const countDisplay = document.getElementById('count');
+    const elapsedDisplay = document.getElementById('elapsed');
+    const startedAt = Date.now();
+    let count = 0;
+    button.addEventListener('click', () => {
+      count += 1;
+      countDisplay.textContent = String(count);
+    });
+    function updateElapsed() {
+      const seconds = Math.max(0, Math.floor((Date.now() - startedAt) / 1000));
+      elapsedDisplay.textContent = String(seconds) + ' s';
+    }
+    setInterval(updateElapsed, 1000);
+    document.addEventListener('visibilitychange', updateElapsed);
+    window.addEventListener('pageshow', updateElapsed);
+    updateElapsed();
+  </script>
+</body>
+</html>
