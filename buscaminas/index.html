@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Buscaminas</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="engine.js" defer></script>
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <main>
+    <header><h1>Buscaminas</h1><p>9 × 9 · 10 minas</p></header>
+    <div class="indicators">
+      <div><span>Banderas disponibles</span><strong id="flags">10</strong></div>
+      <div><span>Tiempo</span><strong id="time" aria-label="Tiempo transcurrido: 00:00">00:00</strong></div>
+    </div>
+    <fieldset id="actions"><legend>Acción</legend><div class="modes">
+      <label><input type="radio" name="mode" value="reveal" checked> Descubrir</label>
+      <label><input type="radio" name="mode" value="flag"> Marcar</label>
+    </div></fieldset>
+    <p id="instruction">Tocá o hacé clic para descubrir.</p>
+    <div id="board" role="grid" aria-label="Tablero de Buscaminas" aria-rowcount="9" aria-colcount="9" aria-describedby="keyboard-help"></div>
+    <p id="status" role="status" aria-live="polite" aria-atomic="true">Elegí una casilla. El primer descubrimiento es seguro.</p>
+    <button id="new-game" type="button">Nueva partida</button>
+    <div class="help"><p id="keyboard-help">Teclado: Tab para entrar al tablero, flechas para moverte, Enter o Espacio para la acción elegida.</p><p>Clic derecho para poner o quitar una bandera.</p><p>Recargar la página borra la partida. El primer descubrimiento es seguro; algunas partidas requieren adivinar.</p></div>
+    <footer>Versión B-1.0.0</footer>
+    <noscript>Necesitás activar JavaScript para jugar.</noscript>
+  </main>
+  <dialog id="restart-dialog" aria-labelledby="dialog-title" aria-describedby="dialog-description">
+    <h2 id="dialog-title">¿Empezar una nueva partida?</h2><p id="dialog-description">Se perderá la partida actual.</p>
+    <div class="dialog-actions"><button id="cancel-restart" type="button" autofocus>Seguir jugando</button><button id="confirm-restart" type="button">Nueva partida</button></div>
+  </dialog>
+</body>
+</html>
